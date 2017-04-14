@@ -29,11 +29,6 @@ pipeline {
             }
           },
           "Build on Windows": {
-              when {
-                expression {
-                  Jenkins.instance.getNode('windows').toComputer().isOnline() 
-                }
-              }
               agent {
                 label 'windows'
               }
