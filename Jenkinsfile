@@ -29,7 +29,10 @@ pipeline {
             }
           },
           "Build on Windows": {
-            node(label: 'ubuntu-docker') {
+            agent {
+              label 'windows'  
+            }
+            steps {
                 bat 'echo "Building on Windows"' 
             }
           }
