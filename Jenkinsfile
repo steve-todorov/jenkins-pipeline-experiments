@@ -1,14 +1,62 @@
 pipeline {
-    agent any
-    tools { 
-        maven 'maven-3.3.9' 
-        jdk 'jdk-1.8.0_65' 
+  agent {
+    node {
+      label 'opensuse-sonar-docker'
     }
-    stages {
-        stage ('Build') {
-            steps {
-                sh 'mvn -Dmaven.test.failure.ignore=true install' 
+  }
+  stages {
+    stage('Build') {
+      steps {
+        echo 'Build commands.'
+      }
+    }
+    stage('Build on other OS\'s') {
+      steps {
+        parallel(
+          "Build on Debian": {
+            node(label: 'debian-docker') {
+                echo 'Build on debian-docker.'
             }
-        }
+          },
+          "Build on CentOS": {
+            node(label: 'centos-docker') {
+                echo 'Build on centos-docker.'
+            }                       
+          },
+          "Build on Ubuntu": {
+            node(label: 'ubuntu-docker') {
+                echo 'Build on ubuntu-docker.'
+            }
+          },
+          "Build on Windows": {
+            if(Jenkins.instance.getNode('windows').toComputer().isOnline()) 
+            {
+                echo 'Skipping building on Windows as node is currently unavailable.';
+            }
+            else
+            {
+                node(label: 'windows') {
+                    echo 'Build on windows.'
+                }
+            }            
+          }
+        )
+      }
     }
+    stage('Deploy to stage') {
+      steps {
+          echo 'Deploying to stage.'
+      }
+    }
+    stage('Integration tests') {
+      steps {
+          echo 'Running integration tests.'
+      }
+    }
+    stage('Deploy') {
+      steps {
+          echo 'Running deploying to production.'
+      }
+    }
+  }
 }
