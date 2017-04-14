@@ -29,16 +29,16 @@ pipeline {
             }
           },
           "Build on Windows": {
-            when {
-              expression {
-                Jenkins.instance.getNode('windows').toComputer().isOnline()
+              when {
+                expression {
+                  Jenkins.instance.getNode('windows').toComputer().isOnline() 
+                }
               }
-            }
-            steps {
-              node(label: 'windows') {
-                echo 'Build on windows.'
-              }             
-            }    
+              steps {
+                node(label: 'windows') {
+                  echo 'Build on windows.'
+                }      
+              }
           }
         )
       }
