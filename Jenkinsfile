@@ -34,10 +34,11 @@ pipeline {
                   Jenkins.instance.getNode('windows').toComputer().isOnline() 
                 }
               }
+              agent {
+                label 'windows'
+              }
               steps {
-                node(label: 'windows') {
-                  echo 'Build on windows.'
-                }      
+                bat 'echo "Building on Windows"' 
               }
           }
         )
