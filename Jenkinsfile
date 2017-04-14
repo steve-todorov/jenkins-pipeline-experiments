@@ -29,10 +29,7 @@ pipeline {
             }
           },
           "Build on Windows": {
-            agent {
-              label 'windows'  
-            }
-            steps {
+            node(label: 'windows') {
                 bat 'echo "Building on Windows"' 
             }
           }
