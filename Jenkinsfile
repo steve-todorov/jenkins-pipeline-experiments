@@ -29,16 +29,16 @@ pipeline {
             }
           },
           "Build on Windows": {
-            if(Jenkins.instance.getNode('windows').toComputer().isOnline()) 
-            {
-                echo 'Skipping building on Windows as node is currently unavailable.';
+            when {
+              expression {
+                Jenkins.instance.getNode('windows').toComputer().isOnline()
+              }
             }
-            else
-            {
-                node(label: 'windows') {
-                    echo 'Build on windows.'
-                }
-            }            
+            steps {
+              node(label: 'windows') {
+                echo 'Build on windows.'
+              }             
+            }    
           }
         )
       }
