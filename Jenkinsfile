@@ -1,13 +1,15 @@
 pipeline {
-    agent {
-        node {
-            label 'opensuse-sonar-docker'
-        }
-    }
+    agent { label 'opensuse-sonar-docker' }
     stages {
         stage('Build') {
             steps {
-                echo 'Build commands.'
+                checkout scm
+                try {
+                    sh 'mvn clean install'
+                }
+                finally {
+                    junit '**/target/*.xml'
+                }
             }
         }
         stage('Build on other OS\'s') {
@@ -16,22 +18,46 @@ pipeline {
                     "Build on Debian": {
                         agent { label 'debian-docker'}
                         steps {
-                            echo 'Build on debian-docker.'
+                            checkout scm
+                            try {
+                                sh 'mvn clean install'
+                            }
+                            finally {
+                                junit '**/target/*.xml'
+                            }
                         }
                     },
                     "Build on CentOS": {
                         node(label: 'centos-docker') {
-                            echo 'Build on centos-docker.'
+                            checkout scm
+                            try {
+                                sh 'mvn clean install'
+                            }
+                            finally {
+                                junit '**/target/*.xml'
+                            }
                         }
                     },
                     "Build on Ubuntu": {
                         node(label: 'ubuntu-docker') {
-                            echo 'Build on ubuntu-docker.'
+                            checkout scm
+                            try {
+                                sh 'mvn clean install'
+                            }
+                            finally {
+                                junit '**/target/*.xml'
+                            }
                         }
                     },
                     "Build on Windows": {
                         node(label: 'windows') {
-                            bat 'echo "Building on Windows"'
+                            checkout scm
+                            try {
+                                bat 'mvn clean install'
+                            }
+                            finally {
+                                junit '**/target/*.xml'
+                            }
                         }
                     }
                 )
