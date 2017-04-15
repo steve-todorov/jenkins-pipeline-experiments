@@ -17,7 +17,7 @@ pipeline {
         }
         stage('Build on other OS\'s') {
             steps {
-                parallel "Build on Debian": {
+                parallel("Build on Debian": {
                         node('debian-docker') {
                             checkout scm
                             try {
@@ -28,6 +28,7 @@ pipeline {
                             }
                         }                        
                     }
+                )
             }
         }
     }
