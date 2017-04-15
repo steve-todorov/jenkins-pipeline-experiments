@@ -1,5 +1,5 @@
 def map = [
-    'Build on Debian' = {
+    'Build on Debian': {
         node('debian-docker') {
             echo 'Build on Debian'
         }
