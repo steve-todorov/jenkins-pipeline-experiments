@@ -26,14 +26,7 @@ pipeline {
             }
         }
         stage('Build on other OS\'s') {
-            steps {
-                parallel parallelSteps
-            }
-            post {
-                always {
-                    echo 'This will always run'
-                }
-            }
+            parallel parallelSteps
         }
     }
 }
