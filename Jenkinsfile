@@ -26,7 +26,9 @@ pipeline {
             }
         }
         stage('Build on other OS\'s') {
-            parallel(map)
+            steps {
+                parallel(map)
+            }
         }
     }
 }
