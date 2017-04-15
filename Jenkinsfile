@@ -2,14 +2,15 @@ pipeline {
     agent none
     stages {
         stage('Build') {
-            node('opensuse-sonar-docker') {
+            agent { label 'opensuse-sonar-docker' } 
+            steps {
                 checkout scm
-                try {
-                    sh 'mvn clean install'
-                }
-                finally {
+                sh 'mvn clean install'
+            }
+            post {
+                always {
                     junit '**/target/*.xml'
-                }                
+                }
             }
         }
         stage('Build on other OS\'s') {
