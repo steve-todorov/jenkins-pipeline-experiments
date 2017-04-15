@@ -27,7 +27,22 @@ pipeline {
         }
         stage('Build on other OS\'s') {
             steps {
-                parallel(parallelSteps)
+                parallel(
+                    'Build on Debian': {
+
+                        node('debian-docker') {
+                            checkout scm
+                            try {
+                                echo 'Testing.'
+                            }
+                            finally {
+                                junit '**/target/*.xml'
+                            }
+                        }                        
+                        
+                    }
+                
+                )
             }
         }
     }
