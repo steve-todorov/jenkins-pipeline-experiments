@@ -14,7 +14,7 @@ pipeline {
             steps {
                 parallel(
                     "Build on Debian": {
-                        agent { label: 'debian-docker' }
+                        agent { label 'debian-docker' }
                         steps {
                             echo 'Build on debian-docker.'
                         }
@@ -25,7 +25,7 @@ pipeline {
                         }
                     },
                     "Build on CentOS": {
-                        agent { label: 'centos-docker' }
+                        agent { label 'centos-docker' }
                         steps {
                             echo 'Build on centos-docker.'
                         }
@@ -36,7 +36,7 @@ pipeline {
                         }
                     },
                     "Build on Ubuntu": {
-                        agent { label: 'ubuntu-docker' }
+                        agent { label 'ubuntu-docker' }
                         steps {
                             echo 'Build on ubuntu-docker.'
                         }
@@ -47,7 +47,7 @@ pipeline {
                         }
                     },
                     "Build on Windows": {
-                        agent { label: 'windows' }
+                        agent { label 'windows' }
                         steps {
                             bat 'echo "Building on Windows"'
                         }
