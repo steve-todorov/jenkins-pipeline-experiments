@@ -9,7 +9,7 @@ pipeline {
             }
             post {
                 always {
-                    junit '**/target/*.xml'
+                    junit '**/target/surefire-reports/*.xml'
                 }
             }
         }
@@ -24,7 +24,7 @@ pipeline {
                         }
                         post {
                             always {
-                                junit '**/target/*.xml'
+                                junit '**/target/surefire-reports/*.xml'
                             }
                         }
                     },
@@ -36,7 +36,7 @@ pipeline {
                         }
                         post {
                             always {
-                                junit '**/target/*.xml'
+                                junit '**/target/surefire-reports/*.xml'
                             }
                         }
                     },
@@ -48,7 +48,7 @@ pipeline {
                         }
                         post {
                             always {
-                                junit '**/target/*.xml'
+                                junit '**/target/surefire-reports/*.xml'
                             }
                         }
                     },
@@ -60,7 +60,7 @@ pipeline {
                         }
                         post {
                             always {
-                                junit '**/target/*.xml'
+                                junit '**/target/surefire-reports/*.xml'
                             }
                         }
                     }
