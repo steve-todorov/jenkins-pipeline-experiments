@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'opensuse-sonar-docker' }
+    agent none
     stages {
         stage('Build') {
             agent { label 'opensuse-sonar-docker' }
