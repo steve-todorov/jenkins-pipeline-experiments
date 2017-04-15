@@ -17,20 +17,40 @@ pipeline {
                         node(label: 'debian-docker') {
                             echo 'Build on debian-docker.'
                         }
+                        post {
+                            always {
+                                echo 'Post Debian'
+                            }
+                        }
                     },
                     "Build on CentOS": {
                         node(label: 'centos-docker') {
                             echo 'Build on centos-docker.'
+                        }
+                        post {
+                            always {
+                                echo 'Post CentOS'
+                            }
                         }
                     },
                     "Build on Ubuntu": {
                         node(label: 'ubuntu-docker') {
                             echo 'Build on ubuntu-docker.'
                         }
+                        post {
+                            always {
+                                echo 'Post Ubuntu'
+                            }
+                        }
                     },
                     "Build on Windows": {
                         node(label: 'windows') {
                             bat 'echo "Building on Windows"'
+                        }
+                        post {
+                            always {
+                                echo 'Post Windows'
+                            }
                         }
                     }
                 )
