@@ -14,46 +14,54 @@ pipeline {
             steps {
                 parallel(
                     "Build on Debian": {
-                        agent { label 'debian-docker' }
                         steps {
-                            echo 'Build on debian-docker.'
-                        }
-                        post {
-                            always {
-                                echo 'Post Debian'
+                            agent { label 'debian-docker' }
+                            steps {
+                                echo 'Build on debian-docker.'
+                            }
+                            post {
+                                always {
+                                    echo 'Post Debian'
+                                }
                             }
                         }
                     },
                     "Build on CentOS": {
-                        agent { label 'centos-docker' }
                         steps {
-                            echo 'Build on centos-docker.'
-                        }
-                        post {
-                            always {
-                                echo 'Post CentOS'
+                            agent { label 'centos-docker' }
+                            steps {
+                                echo 'Build on centos-docker.'
+                            }
+                            post {
+                                always {
+                                    echo 'Post CentOS'
+                                }
                             }
                         }
                     },
                     "Build on Ubuntu": {
-                        agent { label 'ubuntu-docker' }
                         steps {
-                            echo 'Build on ubuntu-docker.'
-                        }
-                        post {
-                            always {
-                                echo 'Post Ubuntu'
+                            agent { label 'ubuntu-docker' }
+                            steps {
+                                echo 'Build on ubuntu-docker.'
+                            }
+                            post {
+                                always {
+                                    echo 'Post Ubuntu'
+                                }
                             }
                         }
                     },
                     "Build on Windows": {
-                        agent { label 'windows' }
                         steps {
-                            bat 'echo "Building on Windows"'
-                        }
-                        post {
-                            always {
-                                echo 'Post Windows'
+                            agent { label 'windows' }
+                            steps {
+                                bat 'echo "Building on Windows"'
+                            }
+                            post {
+                                always {
+                                    echo 'Post Windows'
+                                }
                             }
                         }
                     }
