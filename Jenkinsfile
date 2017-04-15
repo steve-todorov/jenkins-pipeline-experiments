@@ -15,44 +15,11 @@ pipeline {
         stage('Build on other OS\'s') {
             steps {
                 parallel(
-                    "Build on Debian": {
-                        node(label: 'debian-docker') {
-                            checkout scm
-                            try {
-                                sh 'mvn clean install'
-                            }
-                            finally {
-                                junit '**/target/*.xml'
-                            }
-                        }
-                    },
-                    "Build on CentOS": {
-                        node(label: 'centos-docker') {
-                            checkout scm
-                            try {
-                                sh 'mvn clean install'
-                            }
-                            finally {
-                                junit '**/target/*.xml'
-                            }
-                        }
-                    },
-                    "Build on Ubuntu": {
-                        node(label: 'ubuntu-docker') {
-                            checkout scm
-                            try {
-                                sh 'mvn clean install'
-                            }
-                            finally {
-                                junit '**/target/*.xml'
-                            }
-                        }
-                    },
                     "Build on Windows": {
-                        node(label: 'windows') {
+                        node('windows') {
                             checkout scm
                             try {
-                                bat 'mvn clean install'
+                                sh 'mvn clean install'
                             }
                             finally {
                                 junit '**/target/*.xml'
