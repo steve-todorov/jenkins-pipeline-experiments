@@ -11,8 +11,6 @@ pipeline {
             steps {
                 parallel(
                     "Build on Windows": {
-                        agent { label 'windows' }
-
                         // Conditional execution of this stage - only run this stage if the when condition is true.
                         when {
                             // One and only one condition is allowed.
@@ -21,8 +19,9 @@ pipeline {
                                 return Jenkins.instance.getNode('windows').toComputer().isOnline()
                             }
                         }
-
-                        steps {
+                        
+                        node('windows') 
+                        {
                             git url: 'https://github.com/strongbox/strongbox.git'
                             sh 'mvn clean install'
                         }
