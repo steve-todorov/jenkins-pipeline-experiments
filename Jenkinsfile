@@ -17,15 +17,16 @@ pipeline {
             steps {
                 parallel(
                     "Build on Windows": {
-                        node('windows') {
+                        agent { label 'windows' } 
+                        steps {
                             checkout scm
-                            try {
-                                sh 'mvn clean install'
-                            }
-                            finally {
+                            sh 'mvn clean install'
+                        }
+                        post {
+                            always {
                                 junit '**/target/*.xml'
                             }
-                        }
+                        }                        
                     }
                 )
             }
