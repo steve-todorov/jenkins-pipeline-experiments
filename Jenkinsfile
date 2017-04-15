@@ -17,7 +17,7 @@ pipeline {
         }
         stage('Build on other OS\'s') {
             parallel (
-               node('debian-docker') {
+               "Building on Debian": node('debian-docker') {
                    try {
                         echo "Is this syntax working?"                       
                    }
