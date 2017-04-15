@@ -16,8 +16,7 @@ pipeline {
             steps {
                 parallel(
                     "Build on Debian": {
-                        agent { label 'debian-docker'}
-                        steps {
+                        node(label: 'debian-docker') {
                             checkout scm
                             try {
                                 sh 'mvn clean install'
