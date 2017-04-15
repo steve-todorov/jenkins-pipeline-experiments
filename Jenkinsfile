@@ -25,7 +25,7 @@ pipeline {
         }
         stage('Build on other OS\'s') {
             steps {
-                parallel(parralelSteps)
+                parallel(parallelSteps)
             }
             post {
                 always {
