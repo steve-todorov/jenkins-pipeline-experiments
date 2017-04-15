@@ -16,14 +16,8 @@ pipeline {
                             // One and only one condition is allowed.
                             // Only run if this Scripted Pipeline expression doesn't return false or null
                             expression {
-                                return Jenkins.instance.getNode('windows').toComputer().isOnline()
+                                return Jenkins.instance.getNode('windows').toComputer().isOffline()
                             }
-                        }
-                        
-                        node('windows') 
-                        {
-                            git url: 'https://github.com/strongbox/strongbox.git'
-                            sh 'mvn clean install'
                         }
                     }
                 )
