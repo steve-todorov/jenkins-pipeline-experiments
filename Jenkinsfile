@@ -1,13 +1,3 @@
-import jenkins.model.*
-
-def parallelSteps = [:]
-
-parallelSteps["Build on Debian"] = {
-    node('debian') {
-        echo "Building on Debian"
-    }
-}
-
 //if(Jenkins.instance.getNode('windows').toComputer().isOffline()) {
 //    echo "Will skip triggering build on Windows node because it's ofline."
 //} else {
@@ -27,9 +17,8 @@ pipeline {
         }
         stage('Build on other OS\'s') {
             steps {
-                parallel(
+                parallel 
                     'Build on Debian': {
-
                         node('debian-docker') {
                             checkout scm
                             try {
@@ -39,10 +28,7 @@ pipeline {
                                 junit '**/target/*.xml'
                             }
                         }                        
-                        
                     }
-                
-                )
             }
         }
     }
