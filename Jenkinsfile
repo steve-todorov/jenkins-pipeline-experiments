@@ -2,19 +2,10 @@ pipeline {
     agent none
     stages {
         stage('Build') {
+            agent { label 'master' }
             steps {
-                echo 'Building opensuse...'
+                echo 'Build on master'
             }
-;            agent { label 'opensuse-sonar-docker' }
-;            steps {
-;                git url: 'https://github.com/strongbox/strongbox.git'
-;                sh 'mvn clean install'
-;            }
-;            post {
-;                always {
-;                    junit '**/target/surefire-reports/*.xml'
-;                }
-;            }
         }
         stage('Build on other OS\'s') {
             steps {
@@ -28,7 +19,7 @@ pipeline {
                             }
                             post {
                                 always {
-                                    junit '**/target/surefire-reports/*.xml'
+                                    junit '**/target/*.xml'
                                 }
                             }
                         }
