@@ -14,10 +14,9 @@ pipeline {
             steps {
                 parallel(
                     "Build on Debian": {
-                        node(label: 'debian-docker') {
-                            steps {
-                                echo 'Build on debian-docker.'
-                            }
+                        agent { label 'debian-docker'}
+                        steps {
+                            echo 'Build on debian-docker.'
                         }
                     },
                     "Build on CentOS": {
