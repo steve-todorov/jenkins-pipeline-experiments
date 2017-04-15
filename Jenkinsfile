@@ -1,4 +1,4 @@
-def map = [
+def parallelSteps = [
     "Build on Debian": {
         node(label: 'debian-docker') {
             echo 'Build on debian-docker.'
@@ -44,7 +44,8 @@ pipeline {
         }
         stage('Build on other OS\'s') {
             steps {
-                parallel(map)
+                echo 'Run parallel?'
+                parallel(parallelSteps)
             }
         }
     }
