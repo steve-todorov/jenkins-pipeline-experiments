@@ -19,6 +19,8 @@ pipeline {
                                 return Jenkins.instance.getNode('windows').toComputer().isOffline()
                             }
                         }
+
+                        echo 'Testing message!'
                     }
                 )
             }
