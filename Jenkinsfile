@@ -5,8 +5,8 @@ pipeline {
             steps {
                 node('opensuse-sonar-docker') {
                     ; checkout scm
-		            git url: 'https://github.com/strongbox/strongbox.git'
-		            
+                    git url: 'https://github.com/strongbox/strongbox.git'
+
                     try {
                         sh 'mvn clean install'
                     }
@@ -20,49 +20,49 @@ pipeline {
             steps {
                 parallel(
                     "Build on Debian": {
-                        node('debian-docker') {
+                        agent { label 'debian-docker' }
+                        steps {
 			                git url: 'https://github.com/strongbox/strongbox.git'
-
-                            try {
-                                sh 'mvn clean install'
-                            }
-                            finally {
+                            sh 'mvn clean install'
+                        }
+                        post {
+                            always {
                                 junit '**/target/*.xml'
                             }
                         }
                     },
                     "Build on CentOS": {
-                        node('centos-docker') {
+                        agent { label 'centos-docker' }
+                        steps {
 			                git url: 'https://github.com/strongbox/strongbox.git'
-
-                            try {
-                                sh 'mvn clean install'
-                            }
-                            finally {
+                            sh 'mvn clean install'
+                        }
+                        post {
+                            always {
                                 junit '**/target/*.xml'
                             }
                         }
                     },
                     "Build on Ubuntu": {
-                        node('ubuntu-docker') {
+                        agent { label 'ubuntu-docker' }
+                        steps {
 			                git url: 'https://github.com/strongbox/strongbox.git'
-
-                            try {
-                                sh 'mvn clean install'
-                            }
-                            finally {
+                            sh 'mvn clean install'
+                        }
+                        post {
+                            always {
                                 junit '**/target/*.xml'
                             }
                         }
                     },
                     "Build on Windows": {
-                        node('windows') {
+                        agent { label 'windows' }
+                        steps {
 			                git url: 'https://github.com/strongbox/strongbox.git'
-
-                            try {
-                                bat 'mvn clean install'
-                            }
-                            finally {
+                            bat 'mvn clean install'
+                        }
+                        post {
+                            always {
                                 junit '**/target/*.xml'
                             }
                         }
