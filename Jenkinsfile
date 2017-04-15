@@ -14,55 +14,25 @@ pipeline {
             steps {
                 parallel(
                     "Build on Debian": {
-                        steps {
-                            agent { label 'debian-docker' }
+                        node(label: 'debian-docker') {
                             steps {
                                 echo 'Build on debian-docker.'
-                            }
-                            post {
-                                always {
-                                    echo 'Post Debian'
-                                }
                             }
                         }
                     },
                     "Build on CentOS": {
-                        steps {
-                            agent { label 'centos-docker' }
-                            steps {
-                                echo 'Build on centos-docker.'
-                            }
-                            post {
-                                always {
-                                    echo 'Post CentOS'
-                                }
-                            }
+                        node(label: 'centos-docker') {
+                            echo 'Build on centos-docker.'
                         }
                     },
                     "Build on Ubuntu": {
-                        steps {
-                            agent { label 'ubuntu-docker' }
-                            steps {
-                                echo 'Build on ubuntu-docker.'
-                            }
-                            post {
-                                always {
-                                    echo 'Post Ubuntu'
-                                }
-                            }
+                        node(label: 'ubuntu-docker') {
+                            echo 'Build on ubuntu-docker.'
                         }
                     },
                     "Build on Windows": {
-                        steps {
-                            agent { label 'windows' }
-                            steps {
-                                bat 'echo "Building on Windows"'
-                            }
-                            post {
-                                always {
-                                    echo 'Post Windows'
-                                }
-                            }
+                        node(label: 'windows') {
+                            bat 'echo "Building on Windows"'
                         }
                     }
                 )
