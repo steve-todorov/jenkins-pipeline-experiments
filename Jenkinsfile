@@ -16,7 +16,7 @@ pipeline {
             steps {
                 git url: 'https://github.com/strongbox/strongbox.git'
                 sh 'mvn clean install'
-                junit '**/target/*.xml'
+                junit '**/target/surefire-reports/*.xml'
             }
         }
         stage('Build on other OS\'s') {
@@ -26,28 +26,28 @@ pipeline {
                         node(label: 'debian-docker') {
                             git url: 'https://github.com/strongbox/strongbox.git'
                             sh 'mvn clean install'
-                            junit '**/target/*.xml'
+                            junit '**/target/surefire-reports/*.xml'
                         }
                     },
                     "Build on CentOS": {
                         node(label: 'centos-docker') {
                             git url: 'https://github.com/strongbox/strongbox.git'
                             sh 'mvn clean install'
-                            junit '**/target/*.xml'
+                            junit '**/target/surefire-reports/*.xml'
                         }
                     },
                     "Build on Ubuntu": {
                         node(label: 'ubuntu-docker') {
                             git url: 'https://github.com/strongbox/strongbox.git'
                             sh 'mvn clean install'
-                            junit '**/target/*.xml'
+                            junit '**/target/surefire-reports/*.xml'
                         }
                     },
                     "Build on Windows": {
                         node(label: 'windows') {
                             git url: 'https://github.com/strongbox/strongbox.git'
                             bat 'mvn clean install'
-                            junit '**/target/*.xml'
+                            junit '**/target/surefire-reports/*.xml'
                         }
                     }
                 )
