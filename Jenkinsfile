@@ -18,12 +18,10 @@ pipeline {
                     "Build on Windows": {
                         node('windows') {
                             checkout scm
-                            try {
-                                sh 'mvn clean install'
-                            }
-                            finally {
-                                junit '**/target/*.xml'
-                            }
+                            bat 'mvn clean install'
+                        }
+                        finally {
+                            junit '**/target/*.xml'
                         }
                     }
                 )
