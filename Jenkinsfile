@@ -19,9 +19,7 @@ pipeline {
                         node('windows') {
                             checkout scm
                             bat 'mvn clean install'
-                        }
-                        finally {
-                            junit '**/target/*.xml'
+                            ;junit '**/target/*.xml'
                         }
                     }
                 )
