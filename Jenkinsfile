@@ -1,29 +1,3 @@
-def parallelSteps = [:]
-
-map["Build on Debian"] = {
-    node(label: 'debian-docker') {
-        echo 'Build on debian-docker.'
-    }
-}
-map["Build on CentOS"] = {
-    node(label: 'centos-docker') {
-        echo 'Build on centos-docker.'
-    }
-}
-map["Build on Ubuntu"] = {
-    node(label: 'ubuntu-docker') {
-        echo 'Build on ubuntu-docker.'
-    }
-}
-
-
-//    "Build on Windows": {
-//        node(label: 'windows') {
-//            bat 'echo "Building on Windows"'
-//        }
-//    }
-
-
 // if(Jenkins.instance.getNode('windows').toComputer().isOffline()) {
 //     echo "Will skip triggering build on Windows node because it's ofline."
 // } else {
@@ -38,14 +12,60 @@ pipeline {
     agent none
     stages {
         stage('Build') {
-            agent { label 'master' }
+            agent { label 'opensuse-sonar-docker' }
             steps {
-                echo 'Build on master'
+                git url: 'https://github.com/strongbox/strongbox.git'
+                sh 'mvn clean install'
+                junit '**/target/*.xml'
             }
         }
         stage('Build on other OS\'s') {
             steps {
-                parallel(parallelSteps)
+                parallel(
+                    "Build on Debian": {
+                        node(label: 'debian-docker') {
+                            git url: 'https://github.com/strongbox/strongbox.git'
+                            sh 'mvn clean install'
+                            junit '**/target/*.xml'
+                        }
+                    },
+                    "Build on CentOS": {
+                        node(label: 'centos-docker') {
+                            git url: 'https://github.com/strongbox/strongbox.git'
+                            sh 'mvn clean install'
+                            junit '**/target/*.xml'
+                        }
+                    },
+                    "Build on Ubuntu": {
+                        node(label: 'ubuntu-docker') {
+                            git url: 'https://github.com/strongbox/strongbox.git'
+                            sh 'mvn clean install'
+                            junit '**/target/*.xml'
+                        }
+                    },
+                    "Build on Windows": {
+                        node(label: 'windows') {
+                            git url: 'https://github.com/strongbox/strongbox.git'
+                            bat 'mvn clean install'
+                            junit '**/target/*.xml'
+                        }
+                    }
+                )
+            }
+        }
+        stage('Deploy to stage') {
+            steps {
+                echo 'Deploying to stage.'
+            }
+        }
+        stage('Integration tests') {
+            steps {
+                echo 'Running integration tests.'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Running deploying to production.'
             }
         }
     }
