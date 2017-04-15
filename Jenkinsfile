@@ -1,10 +1,20 @@
-//if(Jenkins.instance.getNode('windows').toComputer().isOffline()) {
-//    echo "Will skip triggering build on Windows node because it's ofline."
-//} else {
-//    parallelSteps["Build on Windows"] = {
-//        echo 'Building on Windows!'
-//    }
-//}
+def map = [
+    'Build on Debian': {
+        node('debian-docker') {
+            echo 'Build on Debian'
+        }
+    }
+]
+
+if(Jenkins.instance.getNode('windows').toComputer().isOffline()) {
+    echo "Will skip triggering build on Windows node because it's ofline."
+} else {
+    map["Build on Windows"] = {
+        node('windows') {
+            echo 'Building on Windows!'
+        }
+    }
+}
 
 pipeline {
     agent none
@@ -16,17 +26,7 @@ pipeline {
             }
         }
         stage('Build on other OS\'s') {
-            parallel (
-               "Building on Debian": node('debian-docker') {
-                   try {
-                        echo "Is this syntax working?"                       
-                   }
-                   catch(err)
-                   {
-                        echo "Error"
-                   }
-               }
-            )
+            parallel map
         }
     }
 }
