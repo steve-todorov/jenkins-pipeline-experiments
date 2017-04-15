@@ -1,20 +1,21 @@
-def parallelSteps = [
-    "Build on Debian": {
-        node(label: 'debian-docker') {
-            echo 'Build on debian-docker.'
-        }
-    },
-    "Build on CentOS": {
-        node(label: 'centos-docker') {
-            echo 'Build on centos-docker.'
-        }
-    },
-    "Build on Ubuntu": {
-        node(label: 'ubuntu-docker') {
-            echo 'Build on ubuntu-docker.'
-        }
+def parallelSteps = [:]
+
+map["Build on Debian"] = {
+    node(label: 'debian-docker') {
+        echo 'Build on debian-docker.'
     }
-]
+}
+map["Build on CentOS"] = {
+    node(label: 'centos-docker') {
+        echo 'Build on centos-docker.'
+    }
+}
+map["Build on Ubuntu"] = {
+    node(label: 'ubuntu-docker') {
+        echo 'Build on ubuntu-docker.'
+    }
+}
+
 
 //    "Build on Windows": {
 //        node(label: 'windows') {
@@ -44,7 +45,6 @@ pipeline {
         }
         stage('Build on other OS\'s') {
             steps {
-                echo 'Run parallel?'
                 parallel(parallelSteps)
             }
         }
