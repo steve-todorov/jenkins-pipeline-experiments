@@ -3,14 +3,13 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                node('opensuse-sonar-docker') {
-                    ; checkout scm
+                agent { label 'opensuse-sonar-docker' }
+                steps {
                     git url: 'https://github.com/strongbox/strongbox.git'
-
-                    try {
-                        sh 'mvn clean install'
-                    }
-                    finally {
+                    sh 'mvn clean install'
+                }
+                post {
+                    always {
                         junit '**/target/*.xml'
                     }
                 }
