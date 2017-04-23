@@ -8,10 +8,9 @@ node {
         }
         
         stage('Build') {
-              withDockerContainer(image: 'maven:3.3.9-jdk-8', toolName: 'docker') {
-                     git 'https://github.com/strongbox/strongbox.git'                    
-                     sh 'mvn -B clean instll'
-              }
+               maven.inside {
+                      sh "curl -I https://google.com/"
+               }
         }
     }
 }
