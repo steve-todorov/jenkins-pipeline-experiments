@@ -14,10 +14,12 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    def maven = docker.image('maven:3.3.3-jdk-8');
-                    maven.pull()
-                    maven.inside {
-                        sh 'mvn clean install'
+                    docker.withServer('tcp://dev.carlspring.org:2376') {                    
+                        def maven = docker.image('maven:3.3.3-jdk-8');
+                        maven.pull()
+                        maven.inside {
+                            sh 'mvn clean install'
+                        }
                     }
                 }
             }
