@@ -8,21 +8,12 @@
 //     }
 // }
 
-docker.withDockerServer("tcp://jenkins-experimental.carlspring.org:2375") { 
 
-    pipeline {
-        agent none
-        stages {
-            stage('Build') {
-                steps {
-                    docker.image('maven:3.3.3-jdk-8').pull()
-                    docker.image('maven:3.3.3-jdk-8').inside {
-                        sh 'mvn clean install'
-                    }
-                }
-            }
+node {
+    docker.withServer("tcp://jenkins-experimental.carlspring.org:2375") { 
+        docker.image('maven:3.3.3-jdk-8').pull()
+        docker.image('maven:3.3.3-jdk-8').inside {
+            sh 'mvn clean install'
         }
-
     }
-
 }
