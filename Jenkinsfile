@@ -11,9 +11,8 @@
 
 node {
     docker.withServer("tcp://jenkins-experimental.carlspring.org:2375") { 
-        docker.image('maven:3.3.3-jdk-8').pull()
-        docker.image('maven:3.3.3-jdk-8').inside {
-            sh 'mvn clean install'
+        docker.image('httpd').withRun('-p 10234:80') {c ->
+            sh "curl -i http://${hostIp(c)}:10234/"
         }
     }
 }
