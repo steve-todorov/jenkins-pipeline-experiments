@@ -7,7 +7,7 @@ node {
                             centos.pull()    
                      }
                      stage('Build') {
-                            centos.withRun('-v /tmp/m2repo:~/.m2/repository') {
+                            centos.withRun('-v /tmp/.m2/repository:/tmp/.m2/repository') {
                                    git 'https://github.com/strongbox/strongbox.git'
                                    
                                    sh 'echo JAVA_HOME=${JAVA_HOME}'
@@ -17,7 +17,7 @@ node {
                                              mavenSettingsConfig: '5559dcfd-49b3-4ef8-b6e6-1a9b690a9aa2',
                                              mavenLocalRepo: '.repository') 
                                    {
-                                          sh 'mvn clean install'
+                                          sh 'mvn -Dmaven.repo.local=/tmp/.m2/repository clean install'
                                    }
                             }
                      }
