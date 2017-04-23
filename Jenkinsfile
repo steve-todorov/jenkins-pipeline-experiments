@@ -10,63 +10,13 @@
 
 pipeline {
     agent none
-    stages {
-        stage('Build') {
-            agent { label 'opensuse-sonar-docker' }
-            steps {
-                git url: 'https://github.com/strongbox/strongbox.git'
+
+    stage('Build') {
+        steps {
+            docker.image('maven:3.3.3-jdk-8').inside {
                 sh 'mvn clean install'
-                junit '**/target/surefire-reports/*.xml'
-            }
-        }
-        stage('Build on other OS\'s') {
-            steps {
-                parallel(
-                    "Build on Debian": {
-                        node(label: 'debian-docker') {
-                            git url: 'https://github.com/strongbox/strongbox.git'
-                            sh 'mvn clean install'
-                            junit '**/target/surefire-reports/*.xml'
-                        }
-                    },
-                    "Build on CentOS": {
-                        node(label: 'centos-docker') {
-                            git url: 'https://github.com/strongbox/strongbox.git'
-                            sh 'mvn clean install'
-                            junit '**/target/surefire-reports/*.xml'
-                        }
-                    },
-                    "Build on Ubuntu": {
-                        node(label: 'ubuntu-docker') {
-                            git url: 'https://github.com/strongbox/strongbox.git'
-                            sh 'mvn clean install'
-                            junit '**/target/surefire-reports/*.xml'
-                        }
-                    },
-                    "Build on Windows": {
-                        node(label: 'windows') {
-                            git url: 'https://github.com/strongbox/strongbox.git'
-                            bat 'mvn clean install'
-                            junit '**/target/surefire-reports/*.xml'
-                        }
-                    }
-                )
-            }
-        }
-        stage('Deploy to stage') {
-            steps {
-                echo 'Deploying to stage.'
-            }
-        }
-        stage('Integration tests') {
-            steps {
-                echo 'Running integration tests.'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Running deploying to production.'
-            }
+            }            
         }
     }
+
 }
