@@ -8,13 +8,14 @@
 //     }
 // }
 
-pipeline {
-    agent none
-    stages {
-        stage('Build') {
-            steps {
-                script {
-                    docker.withDockerServer("tcp://jenkins-experimental.carlspring.org:2375") { 
+docker.withDockerServer("tcp://jenkins-experimental.carlspring.org:2375") { 
+
+    pipeline {
+        agent none
+        stages {
+            stage('Build') {
+                steps {
+                    script {
                         def maven = docker.image('maven:3.3.3-jdk-8');
                         maven.pull()
                         maven.inside {
@@ -24,6 +25,7 @@ pipeline {
                 }
             }
         }
+
     }
 
 }
