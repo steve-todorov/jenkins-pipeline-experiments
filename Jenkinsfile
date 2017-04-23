@@ -10,7 +10,7 @@ node {
                      stage('Build') {
                             centos.withRun {
                                    git 'https://github.com/strongbox/strongbox.git'
-                                   sh 'which mvn'
+                                   sh '/java/apache-maven-3.3.9/bin/mvn clean install'
                             }
                      }
               }
