@@ -8,7 +8,7 @@ node {
         }
         
         stage('Build') {
-               maven.inside {
+               maven.withRun {
                       sh "curl -I https://google.com/"
                }
         }
