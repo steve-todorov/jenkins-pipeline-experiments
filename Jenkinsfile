@@ -10,9 +10,7 @@
 
 
 node {
-    
-    git 'https://github.com/strongbox/strongbox.git'                    
-    
+       
     docker.withServer("tcp://192.168.100.8:2375") { 
     
         def maven = docker.image('maven:3.3.9-jdk-8'); // https://registry.hub.docker.com/_/maven/
@@ -23,8 +21,11 @@ node {
         
         stage('Build') {
             maven.inside {
-                //sh 'mvn -B clean install'
-                sh 'echo "Is this outputing?"'
+                stage("Container") {
+                    git 'https://github.com/strongbox/strongbox.git'                    
+                    //sh 'mvn -B clean install'
+                    sh 'echo "Is this outputing?"'
+                }
             }
 
 
