@@ -14,7 +14,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    docker.withTool("default") { 
+                    docker.withTool("docker") { 
                         withDockerServer([uri: "cp://dev.carlspring.org:2376"]) { 
                             def maven = docker.image('maven:3.3.3-jdk-8');
                             maven.pull()
