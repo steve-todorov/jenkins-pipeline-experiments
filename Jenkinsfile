@@ -11,8 +11,10 @@
 
 node {
     docker.withServer("tcp://192.168.100.8:2375") { 
-        docker.image('httpd').withRun('-p 10234:80') {c ->
-            sh "curl -i http://${hostIp(c)}:10234/"
+        docker.withRegistry('https://hub.carlspring.org', 'b13411b8-78e8-4f1d-bdbe-c5a0e043d661') {
+            docker.image('jenkins/opensuse-sonar-slave').inside('-v ~/.m2/repo:/m2repo') {
+                sh 'echo "it works."' 
+            }
         }
     }
 }
