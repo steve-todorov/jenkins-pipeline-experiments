@@ -10,7 +10,7 @@
 
 
 node {
-    docker.withServer("tcp://jenkins-experimental.carlspring.org:2375") { 
+    docker.withServer("tcp://192.168.100.8:2375") { 
         docker.image('httpd').withRun('-p 10234:80') {c ->
             sh "curl -i http://${hostIp(c)}:10234/"
         }
