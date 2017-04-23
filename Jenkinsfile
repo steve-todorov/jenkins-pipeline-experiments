@@ -9,7 +9,8 @@ node {
         
         stage('Build') {
                maven.withRun {
-                      sh "curl -I https://google.com/"
+                      git 'https://github.com/strongbox/strongbox.git'
+                      sh 'mvn -B clean install'
                }
         }
     }
