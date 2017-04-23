@@ -15,12 +15,9 @@ docker.withDockerServer("tcp://jenkins-experimental.carlspring.org:2375") {
         stages {
             stage('Build') {
                 steps {
-                    script {
-                        def maven = docker.image('maven:3.3.3-jdk-8');
-                        maven.pull()
-                        maven.inside {
-                            sh 'mvn clean install'
-                        }
+                    docker.image('maven:3.3.3-jdk-8').pull()
+                    docker.image('maven:3.3.3-jdk-8').inside {
+                        sh 'mvn clean install'
                     }
                 }
             }
