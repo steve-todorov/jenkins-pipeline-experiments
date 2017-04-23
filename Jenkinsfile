@@ -12,8 +12,8 @@
 node {
     docker.withServer("tcp://192.168.100.8:2375") { 
         docker.withRegistry('https://hub.carlspring.org', 'b13411b8-78e8-4f1d-bdbe-c5a0e043d661') {
-            docker.image('maven:3.3.9-jdk-8').pull()
-            docker.image('maven:3.3.9-jdk-8').inside() {
+            docker.image('hub.docker.com/maven:3.3.9-jdk-8').pull()
+            docker.image('hub.docker.com/maven:3.3.9-jdk-8').inside() {
                 git 'https://github.com/strongbox/strongbox.git'
                 sh 'mvn clean install'
             }
