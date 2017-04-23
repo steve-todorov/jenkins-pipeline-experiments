@@ -23,7 +23,8 @@ node {
         
         stage('Build') {
             maven.inside {
-                sh 'mvn -B clean install'
+                //sh 'mvn -B clean install'
+                sh 'echo "Is this outputing?"'
             }
 
 
