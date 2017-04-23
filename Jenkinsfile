@@ -7,7 +7,7 @@ node {
                             centos.pull()    
                      }
                      stage('Build') {
-                            centos.withRun {
+                            centos.withRun('-v /tmp/m2repo:~/.m2/repository') {
                                    git 'https://github.com/strongbox/strongbox.git'
                                    
                                    sh 'echo JAVA_HOME=${JAVA_HOME}'
