@@ -20,7 +20,6 @@ pipeline {
                         maven.inside {
                             sh 'mvn clean install'
                         }
-                    } 
                     }
                 }
             }
