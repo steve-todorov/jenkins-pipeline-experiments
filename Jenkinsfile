@@ -1,11 +1,15 @@
 pipeline {
-       agent none
+       agent master
        stages {
               stage('Build') {
-                     agent { label 'opensuse-experimental' }
                      steps {
-                            sh "whoami"
+                            sh "mvn clean install"
                      }
               }
+       }
+       post {
+            always {
+                junit '**/reports/**/*.xml'
+            }
        }
 }
