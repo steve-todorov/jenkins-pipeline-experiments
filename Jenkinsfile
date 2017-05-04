@@ -9,7 +9,8 @@ pipeline {
        }
        post {
             always {
-                junit 'target/surefire-reports/*.xml'
+                archive "target/**/*"
+                junit "target/surefire-reports/*.xml"
             }
        }
 }
