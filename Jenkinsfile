@@ -3,7 +3,7 @@ pipeline {
        stages {
               stage('Build') {
                      steps {
-                            sh "mvn clean install -Dmaven.test.failure.ignore=true"
+                            sh "mvn clean install"
                      }
               }
               stage('Finish') {
@@ -14,8 +14,8 @@ pipeline {
        }
        post {
             always {
-                archive "target/**/*"
-                junit "**/surefire-reports/*.xml"
+                junit(testResults: 'target/surefire-reports/**/*.xml')
+                //archive "target/**/*"
                 //step([$class: 'JUnitResultArchiver', testResults: '**/reports/junit/*.xml', healthScaleFactor: 1.0])
             }
        }
