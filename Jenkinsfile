@@ -60,7 +60,7 @@ pipeline {
             // Email notification
             step([$class: 'Mailer',
                 notifyEveryUnstableBuild: true,
-                recipients: emailextrecipients([[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']]),
+                recipients: emailextrecipients([[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider'], [$class: 'FailingTestSuspectsRecipientProvider'], [$class: 'FirstFailingBuildSuspectsRecipientProvider']]),
                 sendToIndividuals: true])
         }
     }
