@@ -54,14 +54,18 @@ pipeline {
             // clean up ram
             sh "rm -rf '$RAMWS'"
 
+            // Email notification
+            script {
+                def email = new org.carlspring.jenkins.notification.email.Email()
+                if(BRANCH_NAME == 'master') {
+                    email.sendNotification()
+                } else {
+                    email.sendNotification(null, false, null, [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']])
+                }
+            }
+
             // (fallback) record test results even if withMaven should have done that already.
             junit '**/target/surefire-reports/*.xml'
-            
-            // Email notification
-            step([$class: 'Mailer',
-                notifyEveryUnstableBuild: true,
-                recipients: emailextrecipients([[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider'], [$class: 'FailingTestSuspectsRecipientProvider'], [$class: 'FirstFailingBuildSuspectsRecipientProvider']]),
-                sendToIndividuals: true])
         }
     }
 }
